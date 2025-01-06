@@ -134,7 +134,7 @@ export default function TableV3() {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = sortedData.slice(indexOfFirstItem, indexOfLastItem);
   const totalPages = Math.ceil(sortedData.length / itemsPerPage);
-
+  let serial = indexOfFirstItem +1
   console.log('Current items:', currentItems);
   // Row selection handlers
   const toggleRowSelection = (id: number) => {
@@ -339,7 +339,7 @@ export default function TableV3() {
                            {record[column.key] != null
                               ? column.key === "registration_date"
                                 ? new Date(record[column.key]).toLocaleDateString("en-GB")  
-                               : column.key==="serial_number" ? srNo++
+                               : column.key==="serial_number" ? serial++
                                 : record[column.key].toString()
                               : ""}
                         </td>
