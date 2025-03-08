@@ -1,5 +1,5 @@
 import axios from 'axios';
-const API_BASE_URL = 'https://property-mngnt-backend-seven.vercel.app/';
+const API_BASE_URL = 'https://property-mngnt-backend-seven.vercel.app';
 
 
 

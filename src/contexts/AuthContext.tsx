@@ -3,21 +3,21 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 interface User {
   id: string;
-  username: string;
-  name: string;
-  role: string;
+  email: string; 
+  full_name: string; 
+  phone: string; 
   department: string;
 }
 
 interface AuthContextType {
   user: User | null;
-  login: (username: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
 
   // Load user from localStorage on mount
@@ -28,17 +28,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  const login = async (username: string, password: string) => {
+  const login = async (email: string, password: string) => {
     try {
-      console.log(username,password);
+      console.log(email,password);
       
-      const response = await axios.post('http://localhost:3001/login', { 
-        username, 
+      const response = await axios.post('https://property-mngnt-backend-seven.vercel.app/login', { 
+        email, 
         password 
       });
       console.log(response);
       
-      const { token } = response.data; // Assuming backend sends { token, user }
+      const { token, user } = response.data; // Assuming backend sends { token, user }
 
       // Store user data and token
       localStorage.setItem('token', token);
@@ -46,7 +46,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       setUser(user);
     } catch (error) {
-      console.error('Login failed:', error);
+      console.error('authContext Login failed:', error);
       throw new Error('Invalid credentials');
     }
   };
@@ -64,10 +64,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function useAuth() {
+function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 }
+
+
+export { AuthProvider, useAuth };

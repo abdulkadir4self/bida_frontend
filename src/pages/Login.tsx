@@ -5,7 +5,8 @@ import { useAuth } from '../contexts/AuthContext';
 
 
 export function Login() {
-  const [username, setUsername] = useState('');
+  // const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const { login } = useAuth(); 
@@ -13,12 +14,12 @@ export function Login() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      console.log(username, password);
-      await login(username, password); 
+      console.log(email, password);
+      await login(email, password); 
       navigate('/dashboard');
     } catch (error) {
-      console.error('Login failed:', error);
-      alert('Invalid credentials or server error');
+      console.error('loginPage Login failed:', error);
+      alert('loginPage Invalid credentials or server error');
     }
   };
 
@@ -47,17 +48,16 @@ export function Login() {
                   <User className="h-5 w-5 text-gray-400" />
                 </div>
                 <input
-                  id="username"
-                  name="username"
-                  type="text"
+                  id="email"
+                  name="email"
+                  type="email"
                   required
-                  value={username}
-                  onChange={(e) => {setUsername(e.target.value)
+                  value={email}
+                  onChange={(e) => {setEmail(e.target.value) 
                     console.log(e.target.value);
-                    
                   }}
                   className="appearance-none block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                  placeholder="Enter your username"
+                  placeholder="Enter your email"
                 />
               </div>
             </div>
